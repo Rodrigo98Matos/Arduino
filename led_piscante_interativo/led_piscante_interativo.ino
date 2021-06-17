@@ -1,8 +1,6 @@
 int azul = 8;
 int vermelho = 9;
 int botao = 2;
-int velocidade;
-int duracao;
 
 void setup(){
   pinMode(azul,OUTPUT);
@@ -11,24 +9,38 @@ void setup(){
 }
 
 void loop(){
-  velocidade = 0;
-  if (botao == 1){
-    velocidade++;
-  }
-  if (velocidade > 1){
-    velocidade = 0;
-  }
-  if (velocidade == 0){
-    duracao = 500;
-  }
-  if (velocidade == 1){
-    duracao = 250;
-  }
   digitalWrite(azul,HIGH);
   digitalWrite(vermelho,LOW);
-  delay(duracao);
-
+  delay(500);
+  
+  if (digitalRead(botao) == LOW){
+    mudar();
+  }
   digitalWrite(vermelho,HIGH);
   digitalWrite(azul,LOW);
-  delay(duracao);
+  delay(500);
+
+  if (digitalRead(botao) == LOW){
+    mudar();
+  }
+}
+
+void mudar(){
+  while(1){
+    digitalWrite(azul,HIGH);
+    digitalWrite(vermelho,LOW);
+    delay(250);
+
+    if(digitalRead(botao) == LOW){
+      break;
+    }
+  
+    digitalWrite(vermelho,HIGH);
+    digitalWrite(azul,LOW);
+    delay(250);
+  
+    if(digitalRead(botao) == LOW){
+      break;
+    }
+  }
 }
