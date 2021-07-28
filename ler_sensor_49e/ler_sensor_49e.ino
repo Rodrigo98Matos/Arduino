@@ -1,12 +1,14 @@
+//Sonsor magnetico 49e
+
 void setup() {
   Serial.begin(9600);
 
 }
 
 void loop() {
-  int pot = analogRead(A0);
+  int mag = analogRead(A0)-527;
   
-  Serial.println(pot);
+  Serial.println(mag);
   
   _delay_ms(500);
 
