@@ -19,7 +19,7 @@ void loop() {
   PORTD = 0b10000000; PORTB = digito[2];
   _delay_ms(1);
   cont++;
-  if (cont == 250){
+  if (cont == 200){
     num1++;
     if (num1 == 10){
       num2++;
