@@ -9,6 +9,7 @@ void servo(int g){//g é um número inteiro entre 0 e 1024
   }
 }
 void setup(){
+  set_bit(DDRD,3);
   ADCSRA = 0b10000111; // Enable ADC, prescaler = 128
   ADMUX = 0b01000000; // tensão de referência AVCC e A0 como entrada do ADC (REFS)
 }
