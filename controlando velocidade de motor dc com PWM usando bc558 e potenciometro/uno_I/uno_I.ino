@@ -5,8 +5,8 @@
 #define uno_I 4
 #define set_bit(reg,bit_x) (reg|=(1<<bit_x))
 #define clr_bit(reg,bit_x) (reg&=~(1<<bit_x))
-bool convertido = 1;
 byte valor;
+bool convertido = 1;
 void setup() {
   ADCSRA = 0b10000111; // Enable ADC, prescaler = 128
   ADMUX = 0b01100000; //tensão de referência AVCC / conversão alinhada a esquerda / A0 como entrada para o ADC
