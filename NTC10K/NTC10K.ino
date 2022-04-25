@@ -1,7 +1,7 @@
 #define set_bit(reg,bit_x) (reg|=(1<<bit_x))
 double temp[3] = {0.0, 0.0, 0.0};
 bool convertido = 1;
-int lerAnalog(byte pin){//pin 0 a 7
+int lerAnalog(uint8_t pin){//pin 0 a 7
   ADMUX = 0b01000000 + pin; // tensão de referência AVCC e pin como entrada do ADC (REFS)
   if (convertido) {
     set_bit(ADCSRA,ADSC); // iniciar leitura em A0
@@ -12,7 +12,7 @@ int lerAnalog(byte pin){//pin 0 a 7
     return (ADC);
   }
 }
-void ler_temp(){
+void ler_temp(uint8_t pin){
   double  Rsup = 10000.0,                         //Resistor superior
           Rd0 = 10000.0,                          //Resistencia do NTC a 25°C
           T0 = 298.15,                            //25°C em Kelvin
@@ -25,9 +25,9 @@ void ler_temp(){
           Vadc = 0.0,                             //Tensão lida pelo ADC
           Rntc = 0.0;                             //Resistencia do NTC                           
 
-  float leitura = lerAnalog(1);// lerAnalog(A0);
+  float leitura = lerAnalog(pin);// lerAnalog(A0);
   Vadc = (5.0*leitura)/1023;
-  Rntc = (Rsup*Vadc)/(5.0-Vadc);
+  Rntc = Vadc * (10000/(5.0-Vadc));
   temp[0] = beta/log(Rntc/Rinf);                  //Temperatura em Kelvin
   temp[1] = temp[0] - 273.15;                     //Remperatura em Celsius
   temp[2] = (temp[1] * 9/5) + 32;
@@ -40,7 +40,7 @@ void setup() {
 void loop() {
   char escala[3];
   escala[0] = "K";escala[1] = "C"; escala[2] = "F";
-  ler_temp();
+  ler_temp(3);
   for(int i = 0; i <= 2; i++){
     Serial.print(temp[i]);Serial.print("\t");
   }
